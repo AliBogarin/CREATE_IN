@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Origen de los Productos</title>
-</head>
 <body>
     <h1>Origen de los Productos</h1>
     <p>Bienvenido al repositorio de la aplicación "Origen de los Productos". Esta aplicación tiene como objetivo proporcionar información detallada sobre el origen de los productos que utilizamos en nuestra vida diaria.</p>
