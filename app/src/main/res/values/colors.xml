@@ -5,7 +5,8 @@
     <color name="pink">#E91E63</color>
     <color name="blue">#2196F3</color>
     <color name="dark_blue">#215CF3</color>
-    <color name="blue_sky">#3977A8</color>
+    <color name="blue_sky">#76B8EC</color>
     <color name="red">#F44336</color>
     <color name="purple_ligth">#BEA0F3</color>
+    <color name="blue_ligth">#FF76B8EC</color>
 </resources>
