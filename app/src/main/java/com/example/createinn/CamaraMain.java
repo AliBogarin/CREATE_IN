@@ -1,6 +1,7 @@
 package com.example.createinn;
 
 import android.content.Intent;
+import android.graphics.Camera;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,16 +20,26 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class CamaraMain extends AppCompatActivity {
-   ImageButton main_button;
-   ImageButton capture;
-   EditText result;
+    ImageButton main_button;
+    ImageButton capture;
+    EditText result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camara_main);
         main_button=(ImageButton)findViewById(R.id.button_to_go_hand);
-        capture = findViewById(R.id.button_to_go_hand);
+        capture = findViewById(R.id.capture_Image);
         result= findViewById(R.id.result);
+
+        //abrir camara al comenzar
+        IntentIntegrator intentIntegrator  = new IntentIntegrator(CamaraMain.this);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES); //tipo de codigo a leer
+        intentIntegrator.setPrompt("Lector + CDP"); //lo que me aparece
+        intentIntegrator.setCameraId(0);//camara trasera
+        intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/
+        intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
+        intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
+        intentIntegrator.initiateScan();
 
         main_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +57,9 @@ public class CamaraMain extends AppCompatActivity {
                 intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES); //tipo de codigo a leer
                 intentIntegrator.setPrompt("Lector + CDP"); //lo que me aparece
                 intentIntegrator.setCameraId(0);//camara trasera
+                intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/
                 intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
-                intentIntegrator.setBarcodeImageEnabled(true);//para que pueda leer  los codigos correctamente
+                intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
                 intentIntegrator.initiateScan();
 
 
@@ -63,7 +75,7 @@ public class CamaraMain extends AppCompatActivity {
             if(intentResult.getContents()== null){
                 Toast.makeText(this, "Lectura cancelada", Toast.LENGTH_SHORT).show();
             }else{
-                //muestro el resultado que me envia tanto por toat como por texto
+                //muestro el resultado que me envia tanto por toast como por texto
                 Toast.makeText(this, intentResult.getContents(), Toast.LENGTH_SHORT).show();
                 result.setText(intentResult.getContents());
             }
@@ -72,4 +84,4 @@ public class CamaraMain extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    }
+}

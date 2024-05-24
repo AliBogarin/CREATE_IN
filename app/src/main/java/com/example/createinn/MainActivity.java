@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.camera:
                 Intent intent = new Intent(MainActivity.this,CamaraMain.class);
+                startActivity(intent);
                 break;
 
             case R.id.share:
