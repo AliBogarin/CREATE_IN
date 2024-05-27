@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.camera:
-                Intent intent = new Intent(MainActivity.this,CamaraMain.class);
-                startActivity(intent);
+                Intent camera = new Intent(MainActivity.this,CamaraMain.class);
+                startActivity(camera);
                 break;
 
             case R.id.share:
+                Intent share = new Intent(MainActivity.this, Contacts.class);
+                startActivity(share);
                 break;
 
         }
