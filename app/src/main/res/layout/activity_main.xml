@@ -5,20 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/blue_green">
 
     <TextView
         android:id="@+id/textCodigoBarra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
         android:text="Introducir número de codigo de barras"
-        android:textSize="18dp"
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,19 +28,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint=" Número de  codigo de barras "
+        android:textSize="20dp"
         android:backgroundTint="@color/blue_ligth"
         android:background="@drawable/redondear"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCodigoBarra" />
 
     <Button
+        android:id="@+id/button_validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Validar código"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:backgroundTint="@color/blue"
+        android:background="@drawable/redondear"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rellenable"/>

@@ -57,6 +57,9 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     implementation ("com.squareup.picasso:picasso:2.71828")
     implementation ("com.google.code.gson:gson:2.8.6")
+    implementation ("com.github.bumptech.glide:glide:4.13.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.7.1")
+    implementation ("org.json:json:20210307")
 }
 
 

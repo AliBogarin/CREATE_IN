@@ -1,12 +1,17 @@
 package com.example.createinn;
 
+import static java.lang.System.load;
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Camera;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,12 +21,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.BreakIterator;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,6 +41,12 @@ public class CamaraMain extends AppCompatActivity {
     ImageButton main_button;
     ImageButton capture;
     EditText result;
+    ImageView image_product;
+    TextView name;
+    TextView factured;
+    TextView esos;
+    ImageView image;
+    Context context=this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,16 +54,21 @@ public class CamaraMain extends AppCompatActivity {
         main_button=(ImageButton)findViewById(R.id.button_to_go_hand);
         capture = findViewById(R.id.capture_Image);
         result= findViewById(R.id.result);
+        image_product =findViewById(R.id.image_product);
 
+        name= findViewById(R.id.name_product);
+        factured = findViewById(R.id.factured_place);
+        esos= findViewById(R.id.eso);
+
+        image= findViewById(R.id.image);
         //abrir camara al comenzar
         IntentIntegrator intentIntegrator  = new IntentIntegrator(CamaraMain.this);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES); //tipo de codigo a leer
         intentIntegrator.setPrompt("Lector + CDP"); //lo que me aparece
         intentIntegrator.setCameraId(0);//camara trasera
-        intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/
-        intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
-        intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
-        intentIntegrator.initiateScan();
+        intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
+       intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
+       intentIntegrator.initiateScan();
 
         main_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +107,12 @@ public class CamaraMain extends AppCompatActivity {
             } else {
                 //muestro el resultado que me envia tanto por toast como por texto
                 Toast.makeText(this, intentResult.getContents(), Toast.LENGTH_SHORT).show();
-                result.setText(intentResult.getContents());
-                String barcode = intentResult.getContents();
+                result.setText(intentResult.getContents()); //esto es para que me devuelva la lectura del codigo
+                String barcode =intentResult.getContents();
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url("https://world.openfoodfacts.org/api/v0/product/" + barcode + ".json")
-                        .build();
+                        .url( "https://world.openfoodfacts.org/api/v0/product/"+barcode+".json").build();
 
                 client.newCall(request).enqueue(new Callback() {
                     @Override
@@ -106,24 +124,41 @@ public class CamaraMain extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful()) {
                             final String myResponse = response.body().string();
+                            Log.d("JSON Response", myResponse); //esto para visualizar mi json
 
                             CamaraMain.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
+
                                         Gson gson = new Gson();
+
                                         JsonObject json = gson.fromJson(myResponse, JsonObject.class);
                                         JsonObject product = json.getAsJsonObject("product");
-                                                //pendiente  imagen  y visualizado de respuesta json
+
                                         String productName = product.get("product_name").getAsString();
+                                        name.setText(productName);
+
                                         String quantity = product.get("quantity").getAsString();
                                         String brands = product.get("brands").getAsString();
                                         String categories = product.get("categories").getAsString();
                                         String labels = product.get("labels").getAsString();
+
                                         String manufacturingPlaces = product.get("manufacturing_places").getAsString();
-                                        String url = product.get("url").getAsString();
-                                        String stores = product.get("stores").getAsString();
+                                        factured.setText(manufacturingPlaces);
+
+
+
                                         String countries = product.get("countries").getAsString();
+                                        esos.setText(countries);
+
+
+                                        String imageFrontUrl = product.get("image_thumb_url").getAsString();
+
+                                        Glide.with(context)
+                                                .load(imageFrontUrl)
+                                                .placeholder(R.drawable.ic_launcher_background)
+                                                .into(image);
 
                                         // Aquí puedes usar estos datos para mostrarlos en tu aplicación o compartirlos
                                     } catch (Exception e) {
@@ -137,7 +172,7 @@ public class CamaraMain extends AppCompatActivity {
                 });
             }
 
-    }else {
+        }else {
             //esta es la respuesta de cuando sea nulo
             super.onActivityResult(requestCode, resultCode, data);
         }
