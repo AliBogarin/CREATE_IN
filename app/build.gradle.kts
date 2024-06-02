@@ -60,6 +60,8 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.13.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.7.1")
     implementation ("org.json:json:20210307")
+    implementation ("com.google.android.material:material:1.4.0")
+
 }
 
 

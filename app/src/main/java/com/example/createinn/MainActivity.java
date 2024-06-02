@@ -3,39 +3,64 @@ package com.example.createinn;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
 
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class MainActivity extends AppCompatActivity {
 
     Context context=this;
     Button handValidate;
+    EditText code;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        code= findViewById(R.id.rellenable);
         handValidate=findViewById(R.id.button_validate);
+
 
         handValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CamaraMain.class);
+                String takeCode = code.getText().toString();
+                Intent intent = new Intent(MainActivity.this,ValidateCode.class);
+                intent.putExtra("codigo",takeCode);
                 startActivity(intent);
-                //mirar a ver como puedo validar el numero del codigo de barras
+
             }
         });
 
+
         }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,5 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+
     }
-}
+
+
+
+    }
+
+
+
+

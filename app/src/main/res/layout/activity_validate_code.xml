@@ -5,10 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CamaraMain"
-    android:background="@color/blue_green">
-
-
+    tools:context=".ValidateCode">
 
     <ImageView
         android:id="@+id/image"
@@ -67,54 +64,6 @@
         android:hint="País"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <EditText
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:hint="Numero del codigo de barras"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/capture_Image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_to_go_hand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="90dp"
-        android:layout_marginBottom="96dp"
-        android:background="@color/blue_ligth"
-        android:maxWidth="50dp"
-        android:maxHeight="50dp"
-        android:src="@drawable/baseline_apps_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/capture_Image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/blue_ligth"
-        android:maxWidth="50dp"
-        android:maxHeight="50dp"
-        android:layout_marginBottom="96dp"
-        android:layout_marginRight="150dp"
-        android:src="@drawable/baseline_add_photo_alternate_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-
-
-
-
-
 
 
 

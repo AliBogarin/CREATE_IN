@@ -4,6 +4,7 @@ import static java.lang.System.load;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Camera;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -38,8 +40,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CamaraMain extends AppCompatActivity {
-    ImageButton main_button;
-    ImageButton capture;
+   FloatingActionButton main_button;
+    FloatingActionButton capture;
     EditText result;
     TextView label_name;
     TextView name;
@@ -48,27 +50,31 @@ public class CamaraMain extends AppCompatActivity {
     ImageView image;
     Context context=this;
     ImageView unknown;
+    String infoProduct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camara_main);
-        main_button=(ImageButton)findViewById(R.id.button_to_go_hand);
+
+        main_button=findViewById(R.id.button_to_go_hand);
         capture = findViewById(R.id.capture_Image);
+
         result= findViewById(R.id.result);
         name= findViewById(R.id.name_product);
         factured = findViewById(R.id.factured_place);
         country= findViewById(R.id.country);
         image= findViewById(R.id.image);
         label_name= findViewById(R.id.label_name);
-        unknown= findViewById(R.id.unknown);
+
         //abrir camara al comenzar
         IntentIntegrator intentIntegrator  = new IntentIntegrator(CamaraMain.this);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES); //tipo de codigo a leer
-        intentIntegrator.setPrompt("Lector + CDP"); //lo que me aparece
+        intentIntegrator.setPrompt("Ponga el código en la ventana."); //lo que me aparece
         intentIntegrator.setCameraId(0);//camara trasera
-        intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
-       intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
-       intentIntegrator.initiateScan();
+        intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/
+        intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
+         intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
+         intentIntegrator.initiateScan();
 
         main_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +90,12 @@ public class CamaraMain extends AppCompatActivity {
                 //abrir camara
                 IntentIntegrator intentIntegrator  = new IntentIntegrator(CamaraMain.this);
                 intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES); //tipo de codigo a leer
-                intentIntegrator.setPrompt("Lector + CDP"); //lo que me aparece
+                intentIntegrator.setPrompt("Ponga el código en la ventana."); //lo que me aparece
                 intentIntegrator.setCameraId(0);//camara trasera
                 intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/
                 intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
                 intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
                 intentIntegrator.initiateScan();
-
 
             }
         });
@@ -136,11 +141,8 @@ public class CamaraMain extends AppCompatActivity {
                                         JsonObject product = json.getAsJsonObject("product");
                                         /*Compruebo que el producto exista*/
                                         if(json.get("status").getAsInt() == 0) {
-                                            Toast.makeText(context, "Producto Desconocido", Toast.LENGTH_SHORT).show();
-                                            Glide.with(context)
-                                                    .load(R.drawable.desconocido)
-                                                    .into(unknown);
-
+                                            Intent intent = new  Intent(CamaraMain.this,UnknownProduct.class);
+                                            startActivity(intent);
                                         } else{
                                         /*Aquí leo los datos que voy a mostrar del json obtenido por la lectura del codigo de barras*/
                                         String names = product.get("brands").getAsString();
@@ -162,7 +164,15 @@ public class CamaraMain extends AppCompatActivity {
                                                     .placeholder(R.drawable.ic_launcher_background)
                                                     .into(image);
 
+                                            infoProduct = "Etiqueta: " + label_name.getText().toString();
+                                            infoProduct += "\nNombre: " + name.getText().toString();
+                                            infoProduct += "\nProducido: " + factured.getText().toString();
+                                            infoProduct += "\nPais: " + country.getText().toString();
 
+                                            SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putString("infoProduct", infoProduct);
+                                            editor.apply();
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();
