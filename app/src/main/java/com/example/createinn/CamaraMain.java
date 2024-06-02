@@ -41,12 +41,13 @@ public class CamaraMain extends AppCompatActivity {
     ImageButton main_button;
     ImageButton capture;
     EditText result;
-    ImageView image_product;
+    TextView label_name;
     TextView name;
     TextView factured;
-    TextView esos;
+    TextView country;
     ImageView image;
     Context context=this;
+    ImageView unknown;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +55,12 @@ public class CamaraMain extends AppCompatActivity {
         main_button=(ImageButton)findViewById(R.id.button_to_go_hand);
         capture = findViewById(R.id.capture_Image);
         result= findViewById(R.id.result);
-        image_product =findViewById(R.id.image_product);
-
         name= findViewById(R.id.name_product);
         factured = findViewById(R.id.factured_place);
-        esos= findViewById(R.id.eso);
-
+        country= findViewById(R.id.country);
         image= findViewById(R.id.image);
+        label_name= findViewById(R.id.label_name);
+        unknown= findViewById(R.id.unknown);
         //abrir camara al comenzar
         IntentIntegrator intentIntegrator  = new IntentIntegrator(CamaraMain.this);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES); //tipo de codigo a leer
@@ -132,35 +132,38 @@ public class CamaraMain extends AppCompatActivity {
                                     try {
 
                                         Gson gson = new Gson();
-
                                         JsonObject json = gson.fromJson(myResponse, JsonObject.class);
                                         JsonObject product = json.getAsJsonObject("product");
+                                        /*Compruebo que el producto exista*/
+                                        if(json.get("status").getAsInt() == 0) {
+                                            Toast.makeText(context, "Producto Desconocido", Toast.LENGTH_SHORT).show();
+                                            Glide.with(context)
+                                                    .load(R.drawable.desconocido)
+                                                    .into(unknown);
+
+                                        } else{
+                                        /*Aquí leo los datos que voy a mostrar del json obtenido por la lectura del codigo de barras*/
+                                        String names = product.get("brands").getAsString();
+                                        label_name.setText(names);
 
                                         String productName = product.get("product_name").getAsString();
                                         name.setText(productName);
 
-                                        String quantity = product.get("quantity").getAsString();
-                                        String brands = product.get("brands").getAsString();
-                                        String categories = product.get("categories").getAsString();
-                                        String labels = product.get("labels").getAsString();
-
                                         String manufacturingPlaces = product.get("manufacturing_places").getAsString();
                                         factured.setText(manufacturingPlaces);
 
-
-
                                         String countries = product.get("countries").getAsString();
-                                        esos.setText(countries);
+                                        country.setText(countries);
 
 
-                                        String imageFrontUrl = product.get("image_thumb_url").getAsString();
+                                            String imageFrontUrl = product.get("image_thumb_url").getAsString();
+                                            Glide.with(context)
+                                                    .load(imageFrontUrl)
+                                                    .placeholder(R.drawable.ic_launcher_background)
+                                                    .into(image);
 
-                                        Glide.with(context)
-                                                .load(imageFrontUrl)
-                                                .placeholder(R.drawable.ic_launcher_background)
-                                                .into(image);
 
-                                        // Aquí puedes usar estos datos para mostrarlos en tu aplicación o compartirlos
+                                        }
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
