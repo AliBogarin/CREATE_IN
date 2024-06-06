@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue_acqua"
     tools:context=".Contacts">
 
     <ImageView
@@ -24,9 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_marginRight="100dp"
-        android:hint="Mensaje a enviar"
+        android:hint="Click para compartir"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="84dp"
-        android:src="@drawable/sharp_add_circle_24"
+        android:src="@drawable/icons8_whatsapp_48"
+        android:background="@color/blue_acqua"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toEndOf="@id/message"
         app:layout_constraintTop_toBottomOf="@id/image_decoration" />
 
