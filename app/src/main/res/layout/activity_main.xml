@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/blue_green">
+    android:background="@color/blue_acqua">
 
     <TextView
         android:id="@+id/textCodigoBarra"
@@ -44,7 +44,7 @@
         android:layout_marginTop="35dp"
         android:textStyle="bold"
         android:textSize="15dp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/blue_gen"
         android:background="@drawable/redondear"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

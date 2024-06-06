@@ -9,5 +9,8 @@
     <color name="red">#F44336</color>
     <color name="purple_ligth">#BEA0F3</color>
     <color name="blue_ligth">#FF76B8EC</color>
-    <color name="blue_green">#76DAD1</color>
+    <color name="blue_green">#9ED3DA</color>
+    <color name="blue_acqua">#C1E0E4</color>
+    <color name="blue_gen">#2CA8B8</color>
+
 </resources>

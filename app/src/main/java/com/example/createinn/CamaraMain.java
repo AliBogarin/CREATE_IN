@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -66,16 +67,9 @@ public class CamaraMain extends AppCompatActivity {
         image= findViewById(R.id.image);
         label_name= findViewById(R.id.label_name);
 
-        //abrir camara al comenzar
-        IntentIntegrator intentIntegrator  = new IntentIntegrator(CamaraMain.this);
-        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES); //tipo de codigo a leer
-        intentIntegrator.setPrompt("Ponga el código en la ventana."); //lo que me aparece
-        intentIntegrator.setCameraId(0);//camara trasera
-        intentIntegrator.setOrientationLocked(false); /* bloqueo posicion de camara*/
-        intentIntegrator.setBeepEnabled(true);//que suene cuando lo capture
-         intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
-         intentIntegrator.initiateScan();
 
+
+/*boton para saltar a validar codigo*/
         main_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +77,7 @@ public class CamaraMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+/*boton para abrir camara*/
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +95,7 @@ public class CamaraMain extends AppCompatActivity {
         });
 
     }
+    /*Encargado de hacer petición al api, y leer json para mostrarlo*/
     protected  void  onActivityResult(int requestCode, int resultCode, Intent data) {
         /*1 codigo de respuesta(enter), resultado, datos que transfiere la aplicacion*/
 

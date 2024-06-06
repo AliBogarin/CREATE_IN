@@ -18,7 +18,7 @@ public class Contacts extends AppCompatActivity {
 
     ImageButton sendInformation;
     Context context=this;
-
+ /*Actividad  para compartir los datos obtenidos de la api*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class Contacts extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/html");
                 intent.putExtra(Intent.EXTRA_SUBJECT,"Información importante!.");
-                intent.putExtra(Intent.EXTRA_TEXT ,"Mi web: <a href= 'https://es.openfoodfacts.org/' >Leer</a>"+infoProduct);
+                intent.putExtra(Intent.EXTRA_TEXT ,"Mi web: <a href='https://es.openfoodfacts.org/' >Leer</a>"+infoProduct);
                 intent.setPackage("com.whatsapp");
                 startActivity(intent);
 

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -38,6 +39,10 @@ public class ValidateCode extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validate_code);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
         /*Creo los huecos para alojar el producto obtenido*/
         name= findViewById(R.id.name_product);

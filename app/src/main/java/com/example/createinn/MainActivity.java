@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -46,7 +47,12 @@ public class MainActivity extends AppCompatActivity {
         code= findViewById(R.id.rellenable);
         handValidate=findViewById(R.id.button_validate);
 
+        /*Flecha de retroceso*/
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        /*boton para saltar  a validar codigo*/
         handValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+/*Los menus se visualizan a la parte izquierda para compartir y visualizar la camara*/
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){

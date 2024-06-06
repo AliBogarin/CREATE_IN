@@ -19,12 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CREATEINN"
         tools:targetApi="31">
+        <!--Pongo una flecha de retroceso a ValidateCode para que vuelva a CamaraMain()-->
         <activity
             android:name=".ValidateCode"
-            android:exported="false" />
+            android:exported="false"
+
+            android:parentActivityName=".CamaraMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CamaraMain" />
+        </activity>
         <activity
             android:name=".UnknownProduct"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".Contacts"
             android:exported="false" />
@@ -37,9 +45,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--Pongo una flecha de retroceso a MainActivity para que vuelva a CamaraMain()-->
         <activity
             android:name=".MainActivity"
-            android:exported="false" /> <!-- Obligo a mi camara a ponerse en posicion vertical -->
+            android:exported="false"
+            android:parentActivityName=".CamaraMain" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".CamaraMain" />
+       </activity>
+        <!-- Obligo a mi camara a ponerse en posicion vertical -->
         <activity
             android:name=".CaptureActivityPosition"
             android:screenOrientation="portrait"
